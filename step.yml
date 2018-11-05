@@ -38,31 +38,31 @@ inputs:
       description: |
         Set the module that you want to build. To see your available modules please open your project in Android Studio and go in [Project Structure] and see the list on the left.
       is_required: false
-  - variant: ""
+  - branch: ""
     opts:
       title: Branch
       summary: "Sets the codebase branch name. The flavor will be chosen based on this argument."
       description: "Sets the codebase branch name. The flavor will be chosen based on this argument."
       is_required: true
-  - variant: ""
+  - branch_prefix: ""
     opts:
       title: BranchPrefix
       summary: "Sets the prefix of the branch name. Everything before brand flavor name should be here."
       description: "Sets the prefix of the branch name. Everything before brand flavor name should be here."
       is_required: true
-  - variant: ""
+  - branch_suffix: ""
     opts:
       title: BranchSuffix
       summary: "Sets the suffix of the branch name. Everything after brand flavor name should be here."
       description: "Sets the suffix of the branch name. Everything after brand flavor name should be here."
       is_required: true
-  - variant: ""
+  - variant_prefix: ""
     opts:
       title: VariantPrefix
       summary: "Sets the prefix of the variant name. Everything before brand flavor name should be here."
       description: "Sets the prefix of the variant name. Everything before brand flavor name should be here."
       is_required: true
-  - variant: ""
+  - variant_suffix: ""
     opts:
       title: VariantSuffix
       summary: "Sets the suffix of the variant name. Everything after brand flavor name should be here."
