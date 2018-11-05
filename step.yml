@@ -40,12 +40,34 @@ inputs:
       is_required: false
   - variant: ""
     opts:
-      title: Variant
-      summary: |
-        Set the variant that you want to build. To see your available variants please open your project in Android Studio and go in [Project Structure] -> variants section.
-      description: |
-        Set the variant that you want to build. To see your available variants please open your project in Android Studio and go in [Project Structure] -> variants section.
-      is_required: false
+      title: Branch
+      summary: "Sets the codebase branch name. The flavor will be chosen based on this argument."
+      description: "Sets the codebase branch name. The flavor will be chosen based on this argument."
+      is_required: true
+  - variant: ""
+    opts:
+      title: BranchPrefix
+      summary: "Sets the prefix of the branch name. Everything before brand flavor name should be here."
+      description: "Sets the prefix of the branch name. Everything before brand flavor name should be here."
+      is_required: true
+  - variant: ""
+    opts:
+      title: BranchSuffix
+      summary: "Sets the suffix of the branch name. Everything after brand flavor name should be here."
+      description: "Sets the suffix of the branch name. Everything after brand flavor name should be here."
+      is_required: true
+  - variant: ""
+    opts:
+      title: VariantPrefix
+      summary: "Sets the prefix of the variant name. Everything before brand flavor name should be here."
+      description: "Sets the prefix of the variant name. Everything before brand flavor name should be here."
+      is_required: true
+  - variant: ""
+    opts:
+      title: VariantSuffix
+      summary: "Sets the suffix of the variant name. Everything after brand flavor name should be here."
+      description: "Sets the suffix of the variant name. Everything after brand flavor name should be here."
+      is_required: true
   - apk_path_pattern: "*/build/outputs/apk/*.apk"
     opts:
       category: Options
@@ -69,7 +91,7 @@ inputs:
   - arguments:
     opts:
       category: Options
-      title: Additional Gradle Arguments 
+      title: Additional Gradle Arguments
       summary: Extra arguments passed to the gradle task
       description: Extra arguments passed to the gradle task
       is_required: false

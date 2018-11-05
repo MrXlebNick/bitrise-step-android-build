@@ -28,7 +28,11 @@ const (
 type Configs struct {
 	ProjectLocation string `env:"project_location,dir"`
 	APKPathPattern  string `env:"apk_path_pattern"`
-	Variant         string `env:"variant"`
+	VariantSuffix   string `env:"variant_suffix"`
+	VariantPrefix   string `env:"variant_prefix"`
+	Branch          string `env:"branch"`
+	BranchSuffix    string `env:"branch_suffix"`
+	BranchPrefix    string `env:"branch_prefix"`
 	Module          string `env:"module"`
 	Arguments       string `env:"arguments"`
 	CacheLevel      string `env:"cache_level,opt[none,only_deps,all]"`
@@ -81,6 +85,13 @@ func exportArtifacts(artifacts []gradle.Artifact, deployDir string) ([]string, e
 	return paths, nil
 }
 
+func getVariant(configs Configs) string {
+	variant := strings.Replace(configs.Branch, configs.BranchPrefix, "", 1)
+	variant = strings.Replace(variant, configs.BranchSuffix, "", 1)
+	variant = configs.VariantPrefix + variant + configs.VariantSuffix
+	return variant
+}
+
 func filterVariants(module, variant string, variantsMap gradle.Variants) (gradle.Variants, error) {
 	// if module set: drop all the other modules
 	if module != "" {
@@ -128,7 +139,8 @@ func mainE(config Configs) error {
 		return fmt.Errorf("Failed to fetch variants, error: %s", err)
 	}
 
-	filteredVariants, err := filterVariants(config.Module, config.Variant, variants)
+	variant := getVariant(config)
+	filteredVariants, err := filterVariants(config.Module, variant, variants)
 	if err != nil {
 		return fmt.Errorf("Failed to find buildable variants, error: %s", err)
 	}
