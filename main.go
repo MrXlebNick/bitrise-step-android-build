@@ -235,6 +235,10 @@ func mainE(config Configs) error {
 		log.Warnf("Failed to find mapping files, error: %v", err)
 		return nil
 	}
+	log.Printf("  Env    [ $%s = %s ]", androidBrandEnvKey, getBrand(config))
+	if err := tools.ExportEnvironmentWithEnvman(androidBrandEnvKey, getBrand(config)); err != nil {
+		return fmt.Errorf("Failed to export environment variable: %s", androidBrandEnvKey)
+	}
 
 	if len(mappings) == 0 {
 		log.Printf("No mapping files found with pattern: %s", mappingFilePattern)
@@ -256,10 +260,6 @@ func mainE(config Configs) error {
 	fmt.Println()
 	if err := tools.ExportEnvironmentWithEnvman(mappingFileEnvKey, lastExportedArtifact); err != nil {
 		return fmt.Errorf("Failed to export environment variable: %s", mappingFileEnvKey)
-	}
-	log.Printf("  Env    [ $%s = %s ]", androidBrandEnvKey, getBrand(config))
-	if err := tools.ExportEnvironmentWithEnvman(androidBrandEnvKey, getBrand(config)); err != nil {
-		return fmt.Errorf("Failed to export environment variable: %s", androidBrandEnvKey)
 	}
 	log.Printf("  Env    [ $%s = $BITRISE_DEPLOY_DIR/%s ]", mappingFileEnvKey, filepath.Base(lastExportedArtifact))
 	return nil
