@@ -87,7 +87,7 @@ func exportArtifacts(artifacts []gradle.Artifact, deployDir string) ([]string, e
 }
 
 func getVariant(configs Configs) string {
-	variant := configs.VariantPrefix + getBrand(configs) + configs.VariantSuffix
+	variant := configs.VariantPrefix + strings.Title(getBrand(configs)) + configs.VariantSuffix
 	return variant
 }
 
