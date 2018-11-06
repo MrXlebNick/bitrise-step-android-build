@@ -105,6 +105,12 @@ outputs:
         after filtering based on the filter inputs.
         If the build generates more than one APK which fulfills the
         filter inputs, this output will contain the last one's path.
+  - ANDROID_BRAND:
+    opts:
+      title: "Path of the generated APK"
+      summary: "Path of the generated (and copied) APK - after filtering."
+      description: |-
+        This output will provide the name of the brand.
   - BITRISE_APK_PATH_LIST:
     opts:
       title: "List of the generated APK paths"

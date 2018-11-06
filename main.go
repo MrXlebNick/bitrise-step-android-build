@@ -21,6 +21,7 @@ const (
 	apkEnvKey          = "BITRISE_APK_PATH"
 	apkListEnvKey      = "BITRISE_APK_PATH_LIST"
 	mappingFileEnvKey  = "BITRISE_MAPPING_PATH"
+	androidBrandEnvKey = "ANDROID_BRAND"
 	mappingFilePattern = "*build/*/mapping.txt"
 )
 
@@ -86,10 +87,15 @@ func exportArtifacts(artifacts []gradle.Artifact, deployDir string) ([]string, e
 }
 
 func getVariant(configs Configs) string {
-	variant := strings.Replace(configs.Branch, configs.BranchPrefix, "", 1)
-	variant = strings.Replace(variant, configs.BranchSuffix, "", 1)
-	variant = configs.VariantPrefix + variant + configs.VariantSuffix
+	variant := configs.VariantPrefix + getBrand(configs) + configs.VariantSuffix
 	return variant
+}
+
+func getBrand(configs Configs) string {
+
+	brand := strings.Replace(strings.ToLower(configs.Branch), strings.ToLower(configs.BranchPrefix), "", 1)
+	brand = strings.Replace(strings.ToLower(brand), strings.ToLower(configs.BranchSuffix), "", 1)
+	return brand
 }
 
 func filterVariants(module, variant string, variantsMap gradle.Variants) (gradle.Variants, error) {
@@ -250,6 +256,9 @@ func mainE(config Configs) error {
 	fmt.Println()
 	if err := tools.ExportEnvironmentWithEnvman(mappingFileEnvKey, lastExportedArtifact); err != nil {
 		return fmt.Errorf("Failed to export environment variable: %s", mappingFileEnvKey)
+	}
+	if err := tools.ExportEnvironmentWithEnvman(androidBrandEnvKey, getBrand(config)); err != nil {
+		return fmt.Errorf("Failed to export environment variable: %s", androidBrandEnvKey)
 	}
 	log.Printf("  Env    [ $%s = $BITRISE_DEPLOY_DIR/%s ]", mappingFileEnvKey, filepath.Base(lastExportedArtifact))
 	return nil
