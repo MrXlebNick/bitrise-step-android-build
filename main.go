@@ -257,6 +257,7 @@ func mainE(config Configs) error {
 	if err := tools.ExportEnvironmentWithEnvman(mappingFileEnvKey, lastExportedArtifact); err != nil {
 		return fmt.Errorf("Failed to export environment variable: %s", mappingFileEnvKey)
 	}
+	log.Printf("  Env    [ $%s = %s ]", androidBrandEnvKey, getBrand(config))
 	if err := tools.ExportEnvironmentWithEnvman(androidBrandEnvKey, getBrand(config)); err != nil {
 		return fmt.Errorf("Failed to export environment variable: %s", androidBrandEnvKey)
 	}
